@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/loc.css">
+    
+    <!-- <link rel="stylesheet" href="css/loc.css"> -->
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"> -->
+    <!-- <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .location-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .btn-location {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+        }
+        #sidebar-container {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #343a40;
+            color: white;
+            padding: 10px;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            width: 100%;
+        }
+    </style> -->
+</head>
+<body>
+    <div id="sidebar-container"></div> <!-- Sidebar dynamically loads here -->
+    <div class="center-wrapper">
+      
+        <div class="location-box">
+          <h3>Select Your Location</h3>
+          <div id="location-buttons"></div> <!-- Locations load here -->
+          <button class="btn btn-primary btn-location" onclick="addLocation()">Add Location</button>
+        </div>
+      </div>
+      
+
+    <script>
+        // Load locations from the backend
+        function loadLocations() {
+            fetch("/get-locations")
+            .then(response => response.json())
+            .then(locations => {
+                const container = document.getElementById("location-buttons");
+                container.innerHTML = ""; // Clear existing buttons
+                locations.forEach(location => {
+                    let btn = document.createElement("button");
+                    btn.className = "btn btn-outline-dark btn-location";
+                    btn.textContent = location;
+                    btn.onclick = function() { selectLocation(location); };
+                    container.appendChild(btn);
+                });
+            })
+            .catch(error => console.error("Error fetching locations:", error));
+        }
+
+        // Add a new location
+        function addLocation() {
+            let newLocation = prompt("Enter new location name:");
+            if (!newLocation) return;
+
+            let newAddress = prompt("Enter address for the location:");
+            if (!newAddress) return;
+
+
+            let newPincode = prompt("Enter 6-digit pincode:");
+            if (!/^\d{6}$/.test(newPincode)) {
+                alert("Invalid pincode. It must be a 6-digit non-negative number.");
+                return;
+            }
+
+            fetch("/add-location", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ location_name: newLocation, address: newAddress,pincode: parseInt(newPincode) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                loadLocations(); // Refresh locations list
+            })
+            .catch(error => console.error("Error adding location:", error));
+        }
+
+        // Load sidebar dynamically
+        function loadSidebar() {
+    fetch('sidebar.html')
+    .then(response => response.text())
+    .then(data => {
+        let sidebarContainer = document.getElementById("sidebar-container");
+        sidebarContainer.innerHTML = data;
+        sidebarContainer.style.display = "block";
+        attachSidebarListeners();
+
+        // Attach logout event
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+            logoutBtn.onclick = logout;
+        }
+    })
+    .catch(error => console.error("Error loading sidebar:", error));
+}
+function logout() {
+    localStorage.removeItem("selectedLocationID");
+    alert("You have been logged out.");
+    window.location.href = "/login_register.html"; // adjust path as needed
+}
+
+        // Attach listeners for sidebar menu toggling
+        function attachSidebarListeners() {
+            document.querySelectorAll(".sidebar a").forEach(link => {
+                link.addEventListener("click", function (event) {
+                    let submenu = this.nextElementSibling;
+                    if (submenu && submenu.classList.contains("submenu")) {
+                        event.preventDefault();
+                        submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+                    }
+                });
+            });
+        }
+
+        // Select a location and load the sidebar
+        function selectLocation(locationName) {
+            fetch(`/get-location-id?name=${encodeURIComponent(locationName)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    localStorage.setItem("selectedLocationID", data.location_id); // Store Location_ID
+                    alert("Location Selected: " + locationName);
+                    loadSidebar(); // Load sidebar after selecting a location
+                } else {
+                    alert("Location not found in database.");
+                }
+            })
+            .catch(error => console.error("Error fetching location ID:", error));
+        }
+
+        // Load locations on page load
+        window.onload = loadLocations;
+    </script>
+    <script src="script_dash.js"></script>
+</body>
+</html>

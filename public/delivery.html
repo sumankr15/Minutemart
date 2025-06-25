@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delivery Dashboard</title>
+  <style>
+    body { font-family: Arial; background: #f0f8ff; padding: 20px; }
+    h2 { color: #2c3e50; }
+    .order-card {
+      background: #fff; padding: 15px; margin-bottom: 10px;
+      border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .button-delivered {
+      background-color: #28a745;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .button-undelivered {
+      background-color: #dc3545;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .button-locked {
+      background-color: #6c757d;
+      color: white;
+      cursor: not-allowed;
+    }
+    .logout-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <h2>Your Assigned Deliveries</h2>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <div id="deliveryList"></div>
+
+  <script>
+    function logout() {
+      fetch('/logout', {
+        method: 'POST',
+        credentials: 'include'
+      })
+      .then(res => {
+        if (res.ok) {
+          localStorage.removeItem('deliveryEmail');
+          window.location.href = '/login_register.html';
+        } else {
+          alert('Logout failed.');
+        }
+      })
+      .catch(err => {
+        console.error("Logout error:", err);
+        alert('An error occurred during logout.');
+      });
+    }
+
+    const email = localStorage.getItem('deliveryEmail');
+
+    fetch('/api/getMyDeliveries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        const container = document.getElementById('deliveryList');
+        const grouped = {};
+
+        data.deliveries.forEach(order => {
+          if (!grouped[order.order_id]) {
+            grouped[order.order_id] = {
+              order_id: order.order_id,
+              address_line: order.address_line,
+              city: order.city,
+              state: order.state,
+              country: order.country,
+              postal_code: order.postal_code,
+              items: [],
+              is_delivered: order.is_delivered
+            };
+          }
+          grouped[order.order_id].items.push({
+            product_id: order.product_id,
+            quantity: order.quantity
+          });
+        });
+
+        Object.values(grouped).forEach(order => {
+          const card = document.createElement('div');
+          card.className = 'order-card';
+
+          const fullAddress = `${order.address_line}, ${order.city}, ${order.state}, ${order.country}, ${order.postal_code}`;
+          let itemsHTML = '';
+          order.items.forEach(item => {
+            itemsHTML += `<li>Product ID: ${item.product_id}, Quantity: ${item.quantity}</li>`;
+          });
+
+          const deliveredBtnText = order.is_delivered ? 'delivered' : 'Product Delivered';
+          const buttonClass = order.is_delivered ? 'button-locked' : 'button-delivered';
+          const buttonDisabled = order.is_delivered ? 'disabled' : '';
+
+          card.innerHTML = `
+            <p><strong>Order ID:</strong> ${order.order_id}</p>
+            <p><strong>Address:</strong> ${fullAddress}</p>
+            <p><strong>Items:</strong></p>
+            <ul>${itemsHTML}</ul>
+            <button class="${buttonClass}" ${buttonDisabled} data-order-id="${order.order_id}">
+              ${deliveredBtnText}
+            </button>
+          `;
+
+          const button = card.querySelector('button');
+          button.addEventListener('click', async () => {
+            const response = await fetch('/api/update-delivery-status', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ order_id: order.order_id })
+            });
+
+            if (response.ok) {
+              button.classList.remove('button-delivered');
+              button.classList.add('button-locked');
+              button.disabled = true;
+              button.textContent = 'delivered';
+            }
+          });
+
+          container.appendChild(card);
+        });
+
+      } else {
+        alert('No deliveries found or an error occurred.');
+      }
+    });
+  </script>
+</body>
+</html>

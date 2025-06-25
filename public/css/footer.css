@@ -1,0 +1,195 @@
+/* footer.css - MinuteMart footer styles */
+
+.main-footer {
+    background: rgba(67, 66, 66, 0.009);
+    color: #333;
+    padding: 40px 0 20px;
+    /*border-top: 3px solid #000000; */
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.08);
+    margin-top: auto;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 25px;
+    padding: 0 15px;
+  }
+  
+  .footer-section h3 {
+    color: #52057B;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  
+  .footer-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(to right, #52057B, #BC6FF1);
+    border-radius: 1px;
+  }
+  
+  .footer-section h4 {
+    color: #52057B;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 8px;
+  }
+  
+  .footer-section h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(to right, #52057B, #BC6FF1);
+    border-radius: 1px;
+  }
+  
+  .footer-section p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-section ul li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-section ul li a {
+    color: #444;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 15px;
+  }
+  
+  .footer-section ul li a:before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: #BC6FF1;
+    font-weight: bold;
+  }
+  
+  .footer-section ul li a:hover {
+    color: #52057B;
+    transform: translateX(5px);
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+  }
+  
+  .social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(to right, #52057B, #892CDC);
+    color: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(82, 5, 123, 0.3);
+  }
+  
+  .app-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  
+  .app-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(to right, #52057B, #892CDC);
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(82, 5, 123, 0.2);
+  }
+  
+  .app-btn i {
+    font-size: 1.2rem;
+  }
+  
+  .app-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(82, 5, 123, 0.3);
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid rgba(188, 111, 241, 0.3);
+  }
+  
+  .footer-bottom p {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+    }
+    
+    .footer-section {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .footer-section h3::after,
+    .footer-section h4::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .social-icons {
+      justify-content: center;
+    }
+    
+    .footer-section ul li a {
+      padding-left: 0;
+    }
+    
+    .footer-section ul li a:before {
+      display: none;
+    }
+  }

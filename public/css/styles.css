@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ecdbf9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 25px;
+    background: linear-gradient(to right, rgba(188, 111, 241, 0.1), white);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-left: 6px solid #52057B;
+}
+
+.form-box {
+    display: none;
+    flex-direction: column;
+}
+
+.form-box h2 {
+    text-align: center;
+    color: #050008;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #BC6FF1;
+}
+
+.form-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
+    border-color: #892CDC;
+    box-shadow: 0 0 0 0.15rem rgba(137, 44, 220, 0.25);
+    outline: none;
+}
+
+button {
+    padding: 8px 20px;
+    margin-top: 12px;
+    background: linear-gradient(to right, #52057B, #892CDC);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    box-shadow: 0 3px 8px rgba(82, 5, 123, 0.2);
+}
+
+button:hover {
+    background: linear-gradient(to right, #3D045D, #7825B3);
+    box-shadow: 0 3px 10px rgba(82, 5, 123, 0.4);
+}
+
+button:active {
+    transform: translateY(2px);
+}
+
+p {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 14px;
+    color: #333;
+}
+
+p a {
+    color: #52057B;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+#otp-section {
+    margin-top: 12px;
+}
+
+#login-box {
+    display: block;
+}

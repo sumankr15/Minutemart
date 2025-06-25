@@ -1,0 +1,96 @@
+/* Form Container Styling */
+.form-container {
+    
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 25px 22px;
+    border-radius: 12px;
+    background: linear-gradient(to right, rgba(153, 56, 218, 0.08), #fff);
+    border-left: 5px solid #52057B;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.4s ease;
+}
+
+/* Input and Button Styling */
+input, button {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    margin-top: 15px;
+    border-radius: 8px;
+    font-size: 15px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Input Focus */
+input:focus {
+    border-color: #892CDC;
+    outline: none;
+    box-shadow: 0 0 0 0.15rem rgba(137, 44, 220, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Readonly Input */
+input[readonly] {
+    background-color: rgba(188, 111, 241, 0.1);
+    border: 1px solid #892CDC;
+}
+
+/* Placeholder Styling */
+input::placeholder {
+    color: #888;
+}
+
+/* Submit Button */
+button {
+    background: linear-gradient(to right, #52057B, #892CDC);
+    color: white;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(82, 5, 123, 0.2);
+    animation: pulse 2s infinite;
+}
+
+button:hover {
+    background: linear-gradient(to right, #3D045D, #7825B3);
+    box-shadow: 0 4px 15px rgba(82, 5, 123, 0.4);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(82, 5, 123, 0.3);
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 4px 12px rgba(82, 5, 123, 0.2);
+    }
+    50% {
+        box-shadow: 0 4px 18px rgba(82, 5, 123, 0.4);
+    }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .form-container {
+        margin: 20px;
+        padding: 20px;
+        border-left: 4px solid #52057B;
+    }
+}

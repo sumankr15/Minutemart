@@ -1,0 +1,203 @@
+/* Base Styling */
+body {
+  background-color: #ecdbf9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Changed from center to align at top */
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px 0; /* Added padding to ensure spacing */
+}
+
+/* Form Container - More compact */
+.container {
+  width: 100%;
+  max-width: 800px; /* Reduced from 900px */
+  background: #ffffff;
+  padding: 25px; /* Reduced from 40px */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  border-left: 6px solid #52057B;
+  background: linear-gradient(to right, rgba(188, 111, 241, 0.1), white);
+  max-height: 95vh; /* Limit height */
+  overflow-y: auto; /* Add scroll if needed */
+}
+
+/* Form Heading */
+h3 {
+  font-weight: 600;
+  color: #52057B;
+  margin-top: 0;
+  margin-bottom: 20px; /* Reduced from 30px */
+  padding-bottom: 8px; /* Reduced from 10px */
+  border-bottom: 2px solid #BC6FF1;
+}
+
+/* Form Layout - Horizontal arrangement */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Reduced from 20px */
+  margin-bottom: 10px; /* Reduced from 15px */
+}
+
+.form-group {
+  flex: 1;
+  min-width: 200px; /* Reduced from 250px */
+  margin-bottom: 12px; /* Reduced from 20px */
+}
+
+/* Form Labels */
+.form-label {
+  font-weight: 500;
+  margin-bottom: 4px; /* Reduced from 8px */
+  color: #52057B;
+  display: block;
+  font-size: 14px; /* Added smaller font */
+}
+
+/* Form Inputs */
+.form-control {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 8px 12px; /* Reduced from 12px 14px */
+  font-size: 14px; /* Reduced from 15px */
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.form-control:focus {
+  border-color: #892CDC;
+  box-shadow: 0 0 0 0.15rem rgba(137, 44, 220, 0.25);
+  outline: none;
+}
+
+/* Textarea Styling */
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px; /* Reduced from 100px */
+}
+
+/* File Input Section */
+.image-upload-section {
+  background-color: rgba(188, 111, 241, 0.1);
+  padding: 15px; /* Reduced from 20px */
+  border-radius: 8px;
+  margin-bottom: 20px; /* Reduced from 30px */
+  border: 1px dashed #892CDC;
+}
+
+/* File Input Styling */
+input[type="file"].form-control {
+  padding: 8px; /* Reduced from 10px */
+  background-color: white;
+  margin-bottom: 10px; /* Reduced from 20px */
+  border: 1px solid #892CDC;
+}
+
+/* Image Preview Container */
+.image-preview {
+  margin-bottom: 15px; /* Reduced from 30px */
+  max-width: 100%;
+  overflow: hidden;
+  background-color: rgba(137, 44, 220, 0.05);
+  padding: 8px; /* Reduced from 10px */
+  border-radius: 8px;
+}
+
+/* Buttons Container */
+.button-group {
+  display: flex;
+  gap: 10px; /* Reduced from 15px */
+  margin-top: 20px; /* Reduced from 40px */
+  clear: both;
+  justify-content: flex-end;
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 20px; /* Reduced from 12px 25px */
+  border-radius: 6px; /* Reduced from 8px */
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px; /* Added smaller font */
+}
+
+.btn:active {
+  transform: translateY(2px);
+}
+
+/* Primary Button - Deep Purple */
+.btn-primary {
+  background: linear-gradient(to right, #52057B, #892CDC);
+  color: white;
+  box-shadow: 0 3px 8px rgba(82, 5, 123, 0.2); /* Reduced shadow */
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, #3D045D, #7825B3);
+  box-shadow: 0 3px 10px rgba(82, 5, 123, 0.4); /* Reduced shadow */
+}
+
+/* Secondary Button - Light Purple */
+.btn-secondary {
+  background: linear-gradient(to right, #892CDC, #BC6FF1);
+  color: white;
+  box-shadow: 0 3px 8px rgba(188, 111, 241, 0.2); /* Reduced shadow */
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(to right, #7825B3, #A65BD9);
+  box-shadow: 0 3px 10px rgba(188, 111, 241, 0.4); /* Reduced shadow */
+}
+
+/* Status Message */
+#statusMsg {
+  font-size: 13px; /* Reduced from 14px */
+  margin-top: 12px; /* Reduced from 15px */
+  padding: 8px; /* Reduced from 10px */
+  border-radius: 6px;
+  background-color: rgba(188, 111, 241, 0.1);
+  color: #52057B;
+}
+
+/* Three column layout for certain form rows */
+@media (min-width: 992px) {
+  .form-row.compact {
+    display: flex;
+  }
+  
+  .form-row.compact .form-group {
+    flex: 1;
+    min-width: 150px;
+  }
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 15px; /* Further reduced */
+    margin: 10px;
+    background: white;
+    max-height: none; /* Remove height limit on mobile */
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}

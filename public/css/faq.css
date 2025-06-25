@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background: #f6f6f6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .faq-header {
+    background: linear-gradient(135deg, #52057B, #892CDC);
+    color: white;
+    padding: 50px 20px 60px; /* increased bottom padding for overlap */
+    width: 100%;
+    text-align: center;
+    position: relative;
+  }
+  
+  .faq-header h1 {
+    font-family: "Manrope", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
+  .faq-header p {
+    max-width: 600px;
+    margin: 0 auto 20px;
+    font-size: 1rem;
+  }
+  
+  /* Search bar now positioned absolutely */
+  .search-bar {
+    position: absolute;
+    bottom: -20px; /* overlaps the container */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .search-bar input {
+    border: none;
+    padding: 10px;
+    width: 100%;
+    outline: none;
+  }
+  
+  .search-bar i {
+    padding: 10px;
+    color: #7B2CBF;
+  }
+  
+  /* FAQ container comes up closer */
+  .faq-container {
+    background-color: white;
+    width: 80%;
+    max-width: 800px;
+    margin-top: 40px; /* from -60px to 40px */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    z-index: 1;
+  }
+  
+  .faq-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .faq-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+  
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 10px 0;
+    font-weight: 400;
+  }
+  
+  .faq-answer {
+    display: none;
+    padding: 10px 0;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  .faq-answer.open {
+    display: block;
+  }
+  

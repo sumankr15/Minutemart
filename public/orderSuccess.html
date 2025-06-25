@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Placed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e1c7e5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .success-box {
+      background-color: #d890e8;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .success-box h1 {
+      color: #ffffff;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .success-box p {
+      font-size: 18px;
+      color: #ffffff;
+    }
+
+    .button-group {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #b43dcc;
+      color: rgb(251, 251, 251);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 16px;
+      box-shadow: 0 4px 8px rgba(128, 0, 128, 0.3); /* Soft purple shadow */
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      
+    }
+
+    .btn:hover {
+      background-color: #b43dcc;
+      box-shadow: 0 6px 12px rgba(106, 0, 106, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="success-box">
+    <h1>✅ Order Placed Successfully!</h1>
+    <p>Thank you for your purchase. Your order has been received.</p>
+    
+    <div class="button-group">
+      <a href="welcome.html" class="btn">Back to Home</a>
+      <!-- <button class="btn" onclick="downloadInvoice()">Download Invoice</button> -->
+    </div>
+  </div>
+
+  <!-- Include canvas-confetti from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // Party popper animation on page load
+    window.onload = function () {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    };
+
+    function downloadInvoice() {
+      const userId = localStorage.getItem('userId') || 'UnknownUser';
+      console.log('User ID:', userId);
+
+      fetch(`/api/getUserDetails?userId=${userId}`)
+        .then(response => {
+          if (!response.ok) {
+            return Promise.reject('Failed to fetch user details. Server returned an error.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data && data.user && data.address) {
+            const userName = data.user.name;
+            const userAddress = `${data.address.address_line}, ${data.address.city}, ${data.address.state}, ${data.address.postal_code}, ${data.address.country}`;
+            console.log(data);
+
+            const invoiceContent = `
+              Invoice
+              ---------------
+              User ID: ${userId}
+              Name: ${userName}
+              Address: ${userAddress}
+              Order Status: Placed
+              Date: ${new Date().toLocaleDateString()}
+              Time: ${new Date().toLocaleTimeString()}
+              Thank you for shopping with us!
+            `;
+
+            const blob = new Blob([invoiceContent], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Invoice_${userId}_${Date.now()}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          } else {
+            console.error('Failed to fetch valid user details or address.');
+            alert('There was an issue fetching your details. Please try again later.');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching user details:', error);
+          alert('An error occurred while generating your invoice. Please try again later.');
+        });
+    }
+  </script>
+</body>
+</html>

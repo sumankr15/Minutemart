@@ -1,0 +1,146 @@
+/* Enhanced CSS for right panel only */
+
+/* Right panel container */
+.content-area {
+    margin-left: 244px; /* Preserve space for the left sidebar */
+    
+    background: #ecdbf9;
+    min-height: 100vh;
+}
+
+/* Page headers and titles */
+.content-area h1, .content-area h2 {
+    color: #000000;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* Enhanced Add Product button styling */
+
+
+/* Product card */
+.product-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(82, 5, 123, 0.1);
+    padding: 24px;
+    margin-bottom: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid #8e24aa;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(82, 5, 123, 0.15);
+}
+
+/* Product details styling */
+.product-card h3, .product-card .card-title {
+    color: #5a1d80;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.product-card p, .product-card .card-text {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* Product ID styling */
+.product-card .product-id {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Action buttons in product cards */
+.product-card .btn-group, 
+.product-card .action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+/* Edit button */
+.product-card .edit-btn, 
+.product-card .btn-primary {
+    background: #8e24aa;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 25px;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(142, 36, 170, 0.2);
+    transition: all 0.3s ease;
+}
+
+.product-card .edit-btn:hover, 
+.product-card .btn-primary:hover {
+    background: #7b1fa2;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(142, 36, 170, 0.3);
+}
+
+/* Delete button */
+.product-card .delete-btn,
+.product-card .btn-danger {
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 25px;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(229, 57, 53, 0.2);
+    transition: all 0.3s ease;
+}
+
+.product-card .delete-btn:hover,
+.product-card .btn-danger:hover {
+    background: #1a1313;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(83, 69, 69, 0.3);
+}
+
+/* Form elements adjustments */
+.search-bar input {
+    margin-left: 0;
+    max-width: 400px;
+    border-radius: 25px;
+    border: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #8e24aa;
+    box-shadow: 0 4px 15px rgba(142, 36, 170, 0.15);
+}
+
+/* Product grid layout */
+#product-list {
+    padding: 1rem;
+    margin-left: 0;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Responsive adjustments for right panel only */
+@media (max-width: 768px) {
+    .content-area {
+        margin-left: 0;
+        padding: 15px;
+    }
+    
+    #product-list {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+}

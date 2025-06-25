@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MinuteMart Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /> -->
+  <link rel="stylesheet" href="css/shop_card.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/welcome.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1PjFqb0R2YsZ5x3vxYIi3jR07brqWEHE&libraries=places"
+    async
+    defer
+  ></script>
+  <script src="shop.js"></script>
+
+</head>
+<body>
+
+  <!-- Header gets loaded here -->
+  <div id="header-container"></div>
+
+  <!-- Your main page content -->
+  <main>
+    <h1>Welcome </h1>
+    <p id="location-message" style="margin-top: 10px; font-weight: bold;"></p>
+    <p>Here’s your awesome content...</p>
+  </main>
+
+  <!-- Inline script that loads the header and runs your location logic -->
+  <script>
+    fetch('header.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('header-container').innerHTML = data;
+        //updateCartCountUI();
+
+
+        const cartIcon = document.getElementById("cartIcon");
+        if (cartIcon) {
+          cartIcon.addEventListener("click", () => {
+            loadCartPage();
+          });
+        }
+
+
+        //updateCartCountUI();
+          async function updateCartCountUI() {
+            try {
+              const res = await fetch("/cart-count", { credentials: "include" });
+              const { count } = await res.json();
+              const cartCountSpan = document.getElementById("cartCount");
+        
+              if (cartCountSpan) {
+                if (count > 0) {
+                  cartCountSpan.textContent = count;
+                  cartCountSpan.style.display = "inline-block";
+                } else {
+                  cartCountSpan.style.display = "none";
+                }
+              }
+            } catch (e) {
+              console.error("Error fetching cart count", e);
+            }
+          }
+        
+          updateCartCountUI();
+        // Check if user is logged in and update nav
+        
+        
+
+        fetch("/check-login")
+        .then(res => res.json())
+        .then(status => {
+          if (!status.loggedIn) return;
+
+          localStorage.setItem("isLoggedIn", "true");
+
+          const loginText = document.getElementById("loginText");
+          const loginLink = document.getElementById("loginProfileLink");
+
+          if (status.role === "user") {
+            if (loginText && loginLink) {
+              loginText.textContent = "Profile";
+              loginLink.setAttribute("href", "#");
+          
+              // Load profile only when clicked
+              loginLink.addEventListener("click", (e) => {
+                e.preventDefault();
+          
+                // Prevent multiple loads
+                if (document.getElementById("profile-container")) return;
+          
+                const profileContainer = document.createElement('div');
+                profileContainer.id = 'profile-container';
+                document.querySelector('main').innerHTML = ''; // Optional: clear shop content
+                document.querySelector('main').appendChild(profileContainer);
+          
+                fetch('profile.html')
+                  .then(res => res.text())
+                  .then(html => {
+                    profileContainer.innerHTML = html;
+          
+
+
+                    // Dynamically load CSS
+                  const profileCSS = document.createElement('link');
+                  profileCSS.rel = 'stylesheet';
+                  profileCSS.href = 'css/profile.css';
+                  profileCSS.onload = () => console.log("✅ profile.css loaded");
+                  profileCSS.onerror = () => console.error("❌ profile.css failed");
+                  document.head.appendChild(profileCSS);
+
+                    const profileScript = document.createElement('script');
+                    profileScript.src = 'profile.js';
+                    profileScript.onload = () => console.log("✅ profile.js loaded");
+                    profileScript.onerror = () => console.error("❌ profile.js failed");
+                    document.body.appendChild(profileScript);
+                  })
+                  .catch(err => {
+                    console.error("❌ Failed to load profile.html:", err);
+                  });
+              });
+            }
+          }
+           else if (status.role === "admin") {
+            window.location.href = "/admin-dashboard";
+          } else if (status.role === "delivery") {
+            window.location.href = "/delivery.html";
+          }
+        });
+
+          
+        console.log("📦 Inline location logic loaded!");
+  
+        const waitForGoogle = () => {
+          if (window.google && google.maps && google.maps.places) {
+            initLocationLogic();
+            updateStoredLocation(); // ✅ Run only after Google and DOM are ready
+          } else {
+            setTimeout(waitForGoogle, 100);
+          }
+        };
+  
+        waitForGoogle();
+  
+        function extractPincode(address) {
+          const match = address.match(/(\d{5,6})(?!.*\d)/); // Match last 5-6 digit number
+          return match ? match[1] : null;
+        }
+  
+        function checkPincodeAvailability(pincode) {
+          fetch(`/checkPincode?pincode=${pincode}`)
+            .then(res => res.json())
+            .then(data => {
+              if (data.available) {
+                // ✅ Save the pincode
+                localStorage.setItem("userPincode", pincode);
+
+                // ✅ Check login status
+                const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+                if (!isLoggedIn || isLoggedIn !== "true") {
+                  // 🚧 User not logged in, redirect to login page
+                  window.location.href = `login_register.html?pincode=${pincode}`;
+                } else {
+                  // ✅ User is logged in, load shop content
+                  fetch(`shop.html?pincode=${pincode}`)
+                    .then(res => res.text())
+                    .then(html => {
+                      const parser = new DOMParser();
+                      const doc = parser.parseFromString(html, 'text/html');
+                      const shopMain = doc.querySelector('main');
+
+                      if (shopMain) {
+                        const mainEl = document.querySelector('main');
+                        mainEl.innerHTML = shopMain.innerHTML;
+                        console.log("✅ Shop content loaded.");
+
+                        // ✅ Load shop.js dynamically
+                        const script = document.createElement("script");
+                        script.src = "shop.js";
+                        script.onload = () => {
+                          requestAnimationFrame(() => {
+                            if (typeof initShopPage === "function") {
+                              initShopPage(); // ✅ Initialize shop content
+                              console.log("🧠 initShopPage() executed.");
+                            } else {
+                              console.warn("⚠️ initShopPage() is not defined in shop.js.");
+                            }
+                          });
+                        };
+                        script.onerror = () => {
+                          console.error("❌ Failed to load shop.js.");
+                        };
+                        document.body.appendChild(script);
+                      } else {
+                        console.warn("⚠️ Could not find <main> in shop.html.");
+                      }
+                    })
+                    .catch(err => console.error("❌ Failed to load shop content:", err));
+                }
+              } else {
+                // ❌ If pincode is not available, show message in location-message element
+                const locationMessage = document.getElementById("location-message");
+                if (locationMessage) {
+                  locationMessage.textContent = "🚧 Store is coming soon to your area!";
+                } else {
+                  console.warn("⚠️ location-message element not found.");
+                }
+              }
+            })
+            .catch(err => {
+              console.error("❌ Failed to check pincode:", err);
+            });
+        }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const pincode = localStorage.getItem("userPincode");
+
+  if (isLoggedIn === "true" && pincode) {
+    checkPincodeAvailability(pincode); // Your function that loads the shop section
+  }
+});
+
+  
+        function updateStoredLocation() {
+          const stored = localStorage.getItem("selectedLocation");
+          const selectedLocation = document.getElementById("selected-location");
+          const locationMessage = document.getElementById("location-message");
+  
+          if (stored) {
+            if (selectedLocation) selectedLocation.textContent = stored;
+  
+            const postalCode = extractPincode(stored);
+            if (postalCode) {
+              checkPincodeAvailability(postalCode); // ✅ Always runs now
+            } else if (locationMessage) {
+              locationMessage.textContent = "🚧 store is opening soon.";
+            }
+          }
+        }
+  
+        function initLocationLogic() {
+          const trigger = document.getElementById("locationTrigger");
+          const popup = document.getElementById("locationPopup");
+          const closeBtn = document.getElementById("closePopup");
+          const savedAddress = document.getElementById("savedAddress");
+          const selectedLocation = document.getElementById("selected-location");
+          const enableLocationBtn = document.getElementById("enableLocation");
+          const input = document.getElementById("addressSearch");
+  
+          const infoTextContainer = document.createElement("p");
+          document.querySelector("main").appendChild(infoTextContainer);
+  
+          if (!trigger || !popup) {
+            console.warn("❌ DOM elements not found in header!");
+            return;
+          }
+  
+          trigger.addEventListener("click", () => {
+            popup.style.display = "block";
+          });
+  
+          closeBtn.addEventListener("click", () => {
+            popup.style.display = "none";
+          });
+  
+          function parseAddressComponents(components) {
+            const get = (type) => {
+              const comp = components.find(c => c.types.includes(type));
+              return comp ? comp.long_name : "";
+            };
+  
+            return {
+              address_line: `${get("street_number")} ${get("route")}`.trim(),
+              city: get("locality"),
+              state: get("administrative_area_level_1"),
+              postal_code: get("postal_code"),
+              country: get("country")
+            };
+          }
+  
+          function saveAddress(addressObj) {
+            const fullAddress = `${addressObj.address_line}, ${addressObj.city}, ${addressObj.state}, ${addressObj.postal_code}, ${addressObj.country}`;
+            fetch("/saveAddress", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(addressObj)
+            })
+              .then(res => res.json())
+              .then(data => {
+                console.log("✅ Address saved:", data);
+                selectedLocation.textContent = fullAddress;
+                savedAddress.textContent = fullAddress;
+                localStorage.setItem("selectedLocation", fullAddress);
+                updateStoredLocation(); // ✅ Trigger update
+              })
+              .catch(err => {
+                console.error("❌ Failed to save address:", err);
+              });
+          }
+          
+          // Update count when header loads
+          //document.addEventListener("DOMContentLoaded", updateCartCountUI);
+
+
+
+          const autocomplete = new google.maps.places.Autocomplete(input);
+          autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            if (place.formatted_address && place.address_components) {
+              const parsed = parseAddressComponents(place.address_components);
+              saveAddress(parsed);
+              checkPincodeAvailability(parsed.postal_code);
+              popup.style.display = "none";
+            }
+          });
+  
+          enableLocationBtn.addEventListener("click", () => {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  const lat = position.coords.latitude;
+                  const lng = position.coords.longitude;
+  
+                  const geocoder = new google.maps.Geocoder();
+                  geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+                    if (status === "OK" && results[0]) {
+                      const parsed = parseAddressComponents(results[0].address_components);
+                      saveAddress(parsed);
+                      checkPincodeAvailability(parsed.postal_code);
+                      popup.style.display = "none";
+                    } else {
+                      alert("Location fetch failed");
+                    }
+                  });
+                },
+                () => alert("Permission denied.")
+              );
+            } else {
+              alert("Geolocation not supported.");
+            }
+          });
+          async function updateCartCountUI() {
+            try {
+              const res = await fetch("/cart-count", { credentials: "include" });
+              const { count } = await res.json();
+              const cartCountSpan = document.getElementById("cartCount");
+        
+              if (cartCountSpan) {
+                if (count > 0) {
+                  cartCountSpan.textContent = count;
+                  cartCountSpan.style.display = "inline-block";
+                } else {
+                  cartCountSpan.style.display = "none";
+                }
+              }
+            } catch (e) {
+              console.error("Error fetching cart count", e);
+            }
+          }
+          
+          fetch("/getSavedAddress")
+            .then(res => res.json())
+            .then(data => {
+              if (data.address) {
+                savedAddress.textContent = data.address;
+              } else {
+                savedAddress.textContent = "No saved address found.";
+              }
+            });
+        }
+      })
+      .catch(error => {
+        console.error("❌ Failed to load header:", error);
+      });
+
+
+      
+  </script>
+  <!-- <script>
+    window.addEventListener("beforeunload", function () {
+      navigator.sendBeacon("/logout-on-tab-close");
+    });
+
+  </script> -->
+  <!-- Footer content -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>MinuteMart</h3>
+        <p>Fresh groceries delivered in minutes.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Customer Support</h4>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="help.html">Help Center</a></li>
+          <li><a href="returns.html">Returns & Refunds</a></li>
+          <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Download Our App</h4>
+        <div class="app-links">
+          <a href="#" class="app-btn"><i class="fab fa-apple"></i> App Store</a>
+          <a href="#" class="app-btn"><i class="fab fa-google-play"></i> Google Play</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 MinuteMart. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<main>
+  <button id="goBackBtn" 
+  style="
+    position: absolute; 
+    top: 100px; 
+    left: 10px; 
+    padding: 2px 24px;
+    
+    border-radius: 24px; 
+    border-style: none; 
+    background: linear-gradient(to right, #52057B, #892CDC);
+    color: white;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,
+                rgba(0, 0, 0, .14) 0 6px 10px 0,
+                rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    height: 48px;
+    letter-spacing: 0.25px;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), 
+                opacity 15ms linear 30ms, 
+                transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform, opacity;
+    z-index: 0;
+  ">
+  ↩
+</button>
+
+  <h2 class="product-title">Loading...</h2>
+  <div class="product-detail-container">
+    <img class="product-image" src="" alt="Product Image" />
+    
+    <div class="product-info">
+      <p class="product-detail"></p>
+      <p class="product-price"></p>
+      <p class="product-expiry"></p>
+      <p class="product-quantity"></p>
+      <!-- stock status inserted here -->
+      <hr>
+      <p class="supplier-name"></p>
+      <p class="supplier-address"></p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+    </div>
+  </div>
+</main>
+<script>
+  async function updateCartCountUI() {
+    try {
+      const res = await fetch("/cart-count");
+      const { count } = await res.json();
+
+      const cartCountSpan = document.getElementById("cartCount");
+      if (count > 0) {
+        cartCountSpan.textContent = count;
+        cartCountSpan.style.display = "inline-block";
+      } else {
+        cartCountSpan.style.display = "none";
+      }
+    } catch (e) {
+      console.error("Error fetching cart count", e);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    updateCartCountUI();
+
+    document.querySelectorAll(".add-to-cart-btn").forEach(button => {
+      button.addEventListener("click", async () => {
+        const productCard = button.closest("[data-product-id]");
+        const productId = productCard?.dataset.productId;
+
+        if (!productId) return alert("❗Product ID not found.");
+
+        try {
+          const res = await fetch("/add-to-cart", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ productId })
+          });
+
+          const result = await res.json();
+
+          if (result.success) {
+            alert("🛒 Added to cart!");
+            updateCartCountUI();
+          } else {
+            alert("❌ Failed: " + result.message);
+          }
+        } catch (err) {
+          console.error("Error adding to cart:", err);
+        }
+      });
+    });
+  });
+</script>

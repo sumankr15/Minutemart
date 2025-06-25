@@ -1,0 +1,15 @@
+<!-- sidebar.html -->
+<div class="sidebar">
+    <h4 class="text-center">Admin Panel</h4>
+
+    <a onclick="toggleMenu('stockMenu')"><i class="fas fa-box"></i> Stock Management ▼</a>
+    <div id="stockMenu" class="submenu">
+        <a href="#" onclick="fetchLocationIDAndRedirect(event)">➤ Edit</a>
+        <!-- <a href="#">➤ Check Inventory</a> -->
+    </div>
+
+    <a href="#" onclick="handleDeliveryPartnerClick()"><i class="fas fa-truck"></i> Delivery Partner</a>
+    <!-- <a href="#"><i class="fas fa-headset"></i> Customer Care</a> -->
+    <button id="logoutBtn" class="btn btn-danger w-100 mt-4">Logout</button>
+
+</div>

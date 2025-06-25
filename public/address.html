@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Form</title>
+    <link rel="stylesheet" href="css/address.css"> If you have styles
+</head>
+<body>
+    <h1>Address Form</h1>
+    
+    <form id="addressForm">
+        <input type="hidden" id="userId">
+        <input type="text" id="addressLine" placeholder="Address Line" required>
+        <input type="text" id="city" placeholder="City" required>
+        <input type="text" id="state" placeholder="State" required>
+        <input type="text" id="postalCode" placeholder="Postal Code" required>
+        <input type="text" id="country" placeholder="Country" required>
+        
+        <!-- Submit Button for Creating a New Address -->
+        <button id="submitBtn" type="submit">Submit Address</button>
+        
+        <!-- Update Button for Updating Existing Address (Initially Hidden) -->
+        <button id="updateBtn" type="button" style="display: none;">Pay</button>
+    </form>
+
+    <script src="address.js"></script>
+</body>
+</html>

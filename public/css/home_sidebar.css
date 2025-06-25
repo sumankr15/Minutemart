@@ -1,0 +1,305 @@
+/* home_sidebar.css - Updated with better aesthetics */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: black;
+    color: white;
+    padding-top: 10px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sidebar-title, .sidebar h4 {
+    text-align: center;
+    font-size: 28px; /* Larger admin panel title */
+    margin-bottom: 30px;
+    margin-top:10px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+
+
+.category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    font-size: 25px;
+    font-weight: 500;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #8e44ad;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    margin-left:3px;
+    margin-right:7px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.subcategory-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    /* border: 1px solid #8e44ad; */
+    /* border-radius: 8px; */
+    margin-bottom: 10px;
+    margin-left:3px;
+    margin-right:7px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.subcategory-item:hover {
+    background-color: rgba(136, 55, 170, 0.2);
+}
+.category-header:hover {
+    background-color: rgba(142, 68, 173, 0.2);
+}
+
+.category-header a {
+    color: white;
+    text-decoration: none;
+    flex: 1;
+    font-size: 16px;
+}
+
+.btn-delete-cat {
+    font-size: 14px;
+    padding: 4px 8px;
+    border: 1px solid #8e44ad;
+    border-radius: 5px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.btn-delete-cat:hover {
+    background-color: #8e44ad;
+}
+
+/* Category headers with dropdown arrows */
+
+
+
+
+/* Dropdown arrow icon */
+
+
+
+/* Main content area */
+.main-content, .content-area {
+    margin-left: 100px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+/* Product card styling */
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+
+.form-control, .search-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 14px;
+}
+
+/* Category dropdown */
+.form-select, .category-dropdown {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    margin-left: 10px;
+    background-color: white;
+}
+
+/* Add product button */ 
+.btn-primary, .add-product-btn {
+    padding: 8px 18px;
+    color: #fff;
+    background-color: #7b1fa2;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 5px rgba(142, 36, 170, 0.2);
+}
+
+.btn-primary:hover, .add-product-btn:hover {
+    background-color: #7b1fa2;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 7px rgba(142, 36, 170, 0.3);
+}
+
+/* Product details styling */
+.product-title {
+    color: #8e44ad;
+    font-size: 22px;
+    margin: 10px 0;
+}
+
+.product-info {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.edit-btn {
+    padding: 6px 22px;
+    background-color: #8e44ad;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.delete-btn {
+    padding: 6px 22px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+    
+    .main-content, .content-area {
+        margin-left: 200px;
+    }
+}
+
+/* admin_home.css */
+#product-section {
+    padding: 20px;
+}
+
+.filter-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.product-item {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.product-name {
+    color: #8e44ad;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.product-price {
+    font-weight: 600;
+    color: #333;
+}
+
+.product-details {
+    margin-bottom: 15px;
+}
+
+.detail-row {
+    margin-bottom: 8px;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #555;
+}
+
+/* product_card.css */
+.product-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.product-card h5 {
+    color: #8e44ad;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.product-info {
+    margin-bottom: 15px;
+}
+
+.product-info p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+
+
+
+/* Flex container ensuring alignment */
+.category-header .category-name {
+    flex: 1; /* Ensures category name takes up available space */
+    text-align: left; /* Aligns text to the left */
+}

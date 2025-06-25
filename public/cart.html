@@ -1,0 +1,106 @@
+<head><link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet"> 
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<main>
+
+  <!-- Go Back Button -->
+
+  <button id="goBackBtn" 
+  style="
+    position: absolute; 
+    top: 100px; 
+    left: 10px; 
+    padding: 2px 24px;
+    
+    border-radius: 24px; 
+    border-style: none; 
+    background: linear-gradient(to right, #52057B, #892CDC);
+    color: white;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,
+                rgba(0, 0, 0, .14) 0 6px 10px 0,
+                rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    height: 48px;
+    letter-spacing: 0.25px;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), 
+                opacity 15ms linear 30ms, 
+                transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform, opacity;
+    z-index: 0;
+  ">
+  ↩
+</button>
+
+
+
+  <h2>Your Cart</h2>
+
+  <div class="cart-container" id="cartContainer">
+
+    <!-- Cart items will be injected here -->
+
+  </div>
+
+  <div class="empty-cart" id="emptyCartMessage" style="display: none;">
+
+    OOPS! Looks like your cart is on a diet.<br>
+
+    <img src="uploads\emptycart.png" class="empty-cart-image" style="width:200px; height:auto;">
+
+    <br>
+
+    <a href="welcome.html" class="continue-btn">Continue Shopping?</a>
+
+  </div>
+
+  <div class="cart-summary" id="cartSummary" style="display: none;">
+
+    <h3>🧾 Bill Summary</h3>
+
+    <p>Item Total: ₹<span id="itemTotal">0</span></p>
+
+    <p id="cartFeeRow">Small Cart Fee: ₹<span id="smallCartFee">35</span></p>
+
+    <p id="deliveryFeeRow">Delivery Fee: ₹<span id="deliveryFee">30</span></p>
+
+    <p style="color: green;" id="freeDeliveryNote" hidden>
+
+      Add products worth ₹<span id="remainingForFreeDelivery">0</span> to get free delivery
+
+    </p>
+
+    <hr>
+
+    <h3>To Pay: ₹<span id="totalToPay">0</span></h3>
+
+    <button id="placeOrderBtn">📦 Place Order</button>
+
+  </div>
+
+  
+
+  <div id="orderPlacedBox" style="display: none; text-align: center; margin-top: 20px;"></div>
+
+  <div id="messageContainer"></div>
+
+</main>

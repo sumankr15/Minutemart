@@ -1,0 +1,53 @@
+/* Centering wrapper */
+.center-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* full viewport height */
+  background-color: #f3e5f5; /* very light purple background */
+}
+
+
+/* Location box styling */
+.location-box {
+  background-color: #ede7f6;
+  border-left: 5px solid #7e57c2;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(126, 87, 194, 0.2);
+  color: #4a148c;
+  width: 300px;
+  text-align: center;
+}
+
+.location-box h3 {
+  color: #6a1b9a;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Location buttons */
+#location-buttons {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Add Location Button */
+.btn-location {
+  background-color: #7e57c2;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-location:hover {
+  background-color: #5e35b1;
+}

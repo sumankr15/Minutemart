@@ -1,0 +1,100 @@
+/* sidebar.css - Enhanced */
+.text-center {
+    text-align: center;
+    font-size: 3 rem; /* slightly larger font (20px if base is 16px) */
+    font-weight: 600;    /* optional: makes it a bit bolder */
+    margin-bottom: 10px; /* optional spacing */
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #000000;
+    color: white;
+    padding-top: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.sidebar a {
+    padding: 15px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.sidebar a:hover, .submenu a:hover {
+    background-color: #252226;
+    padding-left: 20px;
+}
+
+.sidebar a:active, .submenu a:active {
+    background-color: #7825B3;
+}
+
+.submenu {
+    display: none;
+    color: white;
+    background-color: #27232a;
+    padding-left: 20px;
+}
+
+.submenu a {
+    padding: 10px;
+    display: block;
+    color: #ffffff;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.submenu-active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+/* Logout Button Styling */
+#logoutBtn {
+    background: linear-gradient(135deg, #490165, #f2aefd);
+    color: rgb(243, 230, 247);
+    border: none;
+    padding: 10px 10px;
+    margin-top: 30px;
+    margin-left: 55px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#logoutBtn:hover {
+    background: linear-gradient(135deg, #6f0686, #fee4fe);
+    transform: translateY(-2px);
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+}

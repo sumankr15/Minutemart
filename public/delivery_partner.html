@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delivery Partners</title>
+    <link rel="stylesheet" href="css/dp.css">
+    
+</head>
+<body>
+    <button id="addBtn" onclick="openAddPartnerPopup()" style="float: right; margin: 20px;">Add Delivery Partner</button>
+    <div id="deliveryContainer" class="grid-container"></div>
+
+    <!-- Add Partner Modal -->
+    <div id="addPartnerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddPartnerPopup()">&times;</span>
+            <h3>Add Delivery Partner</h3>
+            <form id="addPartnerForm" enctype="multipart/form-data">
+                <input type="text" id="name" name="name" placeholder="Name" required>
+                <input type="text" id="aadhar_no" name="aadhar_no" placeholder="Aadhar Number (16 digits)" maxlength="16" required>
+                <input type="email" id="email" name="email" placeholder="Email">
+                <input type="text" id="phone_number" name="phone_number" placeholder="Phone Number (10 digits)" maxlength="10">
+                
+                <!-- File Upload for Photo -->
+                <label for="photo">Photo</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+                
+                <input type="hidden" id="location_id" name="location_id">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="dp.js"></script>
+    <script>
+        // Fetch locationId from the URL
+        const locationId = new URLSearchParams(window.location.search).get('location_id');
+        document.getElementById('location_id').value = locationId;
+        console.log(locationId);  // To make sure locationId is correctly fetched
+    
+        // Open the modal to add a partner
+        function openAddPartnerPopup() {
+            document.getElementById('addPartnerModal').style.display = 'block';
+        }
+    
+        // Close the modal to add a partner
+        function closeAddPartnerPopup() {
+            document.getElementById('addPartnerModal').style.display = 'none';
+        }
+    
+        // Submit the form data
+        document.getElementById('addPartnerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+    
+            // Get form data using FormData API
+            const form = document.getElementById('addPartnerForm');
+            const formData = new FormData(form);
+    
+            // Send the data to the server
+            fetch(`/api/addPartner/${locationId}`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(response => {
+                alert(response.message);
+                closeAddPartnerPopup();
+                location.reload(); // Refresh the page to show new delivery partner
+            })
+            .catch(err => {
+                console.error('Error adding partner:', err);
+                alert('Failed to add partner.');
+            });
+        });
+    
+    </script>
+    
+</body>
+</html>
