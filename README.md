@@ -69,3 +69,50 @@ A full-stack grocery delivery platform that connects local vendors with customer
 1. **Clone the repository**
    ```bash
    git clone https://github.com/sumankr15/Minutemart.git
+
+      ## 🖼️ Screenshots
+
+### 🔐 Login Page
+![Login Screenshot](1.png)
+
+### 🔐 Reset PassWord
+![Reset Password Screenshot](2.png)
+
+### 🧾Admin Dashboard
+![Dashboard Screenshot](14.png)
+![Dashboard Screenshot](15.png)
+![Dashboard Screenshot](16.png)
+
+### 🧾Adding Products 
+![Dashboard Screenshot](17.png)
+
+
+### 🧾Adding Delivery Partner By Admin
+![Dashboard Screenshot](19.png)
+
+### 🧾Real Time Location Selection By Users
+![Dashboard Screenshot](3.png)
+
+### 🧾Category of Products
+![Dashboard Screenshot](7.png)
+![Dashboard Screenshot](8.png)
+![Dashboard Screenshot](9.png)
+
+### 🧾Product Page
+![Dashboard Screenshot](11.png)
+
+### 🧾Cart
+![Dashboard Screenshot](5.png)
+![Dashboard Screenshot](12.png)
+
+### 🧾User Profile 
+![Dashboard Screenshot](4.png)
+
+### 🧾FAQs Page
+![Dashboard Screenshot](10.png)
+
+### 🧾Delivery Partner Order Assignment
+![Dashboard Screenshot](18.png)
+
+
+ 
