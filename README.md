@@ -70,8 +70,8 @@ A full-stack grocery delivery platform that connects local vendors with customer
    ```bash
    git clone https://github.com/sumankr15/Minutemart.git
 
-      ## 🖼️ Screenshots
-
+    
+## 🖼️ Screenshots
 ### 🔐 Login Page
 ![Login Screenshot](1.png)
 
